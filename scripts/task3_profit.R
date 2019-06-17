@@ -38,6 +38,10 @@ ExistProd <- ExistProd[!ExistProd$Volume > 6000,]
 volume_plot <- plot_ly(ExistProd, x = ~ProductType, y= ~Volume)
 volume_plot
 
+
+
+
+
 # Warranty ####
 ExistProd[34:41, "Price"] <- mean(ExistProd[34:41, "Price"])
 ExistProd <- ExistProd[-c(35:41),]
@@ -57,7 +61,8 @@ ggcorr(readyData,label = TRUE,label_alpha = TRUE, legend.size = 7 )
 # findCorrelation(corr_analysis, cutoff = 0.9, verbose = FALSE, names = TRUE,
 #                 exact = TRUE)
 
-Excorr <- subset(ExistProd, select = -c(ProductType,x1StarReviews,x3StarReviews,NegativeServiceReview))
+Excorr <- subset(ExistProd, select = -c(ProductType,x1StarReviews,x3StarReviews,
+                                        x2StarReviews,NegativeServiceReview))
 corrData <- cor(Excorr)
 corrplot(corrData,method = "number", type = "lower")
 
@@ -161,7 +166,8 @@ NewProd$Sales <- NewProd$Price*NewProd$ProfitMargin*NewProd$Volume
 str(NewProd)
 summary(NewProd)
 #Visualizations ####
-finalpredictions <- ggplot(NewProd[NewProd$ProductType == "PC" | 
+
+finalpredictions <- ggplot(NewProd[NewProd$ProductType == "PC" |
                                      NewProd$ProductType == "Laptop" | 
                                      NewProd$ProductType == "Netbook" | 
                                      NewProd$ProductType == "Smartphone",],
@@ -174,6 +180,8 @@ finalpredictions <- ggplot(NewProd[NewProd$ProductType == "PC" |
   # scale_fill_brewer(palette = "Paired")
 
 finalpredictions
+
+
 
 
 #Ejemplo ####
