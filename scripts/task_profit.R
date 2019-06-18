@@ -84,29 +84,6 @@ rpart.plot(decisionTree)
 varImp(decisionTree)
 
 
-#OUTLIER ejemplo####
-
-# OutlierRecognicer <- function(x, y){
-# sd <- sd(x)
-# med <- median(x)
-# out_neg <- c()
-# out_pos <- c()
-# for (i in 1:length(x)){
-#   value <- x[i]
-#   if (value - (y * sd) > med){
-#     out_pos <- c(out_pos, i)
-#   }
-#   if(value + (y * sd) < med){
-#     out_neg <- c(out_neg, i)
-#   }
-# }
-# print(paste("You have", length(out_neg), "numbers of outliers below the distribution"))
-# return(c(out_neg, out_pos))
-# }
-# 
-# outlier <- apply(readyData, 2, function(x){OutlierRecognicer(x,2)})
-
-
 
 #set seed####
 set.seed(252)
@@ -184,18 +161,4 @@ finalpredictions
 
 
 
-#Ejemplo ####
-
-modelKnn<- train(Volume~.,data = training, method = "knn", trControl = control, 
-                 tuneLength = 2, preProcess = c("center", "scale"))
-finalpredictionKnn<- predict(modelKnn, newdata = testing)
-
-testing$predictionknn <- finalpredictionKnn
-testing$absolute.errorKnn <- abs(testing$Volume - testing$predictionknn )
-testing$relative.errorKnn <- testing$absolute.errorKnn/testing$Volume
-
-errors <- ggplot( data=testing, aes(x=Volume, y=absolute.errorKnn))+
-  geom_smooth()+ geom_point()+ggtitle("Abs errors in Knn")
-
-MetricKnn <- postResample(pred = testing$predictionknn, obs = testing$Volume)
 
